@@ -1,0 +1,523 @@
+//Imports
+var imageCollection = ee.ImageCollection("COPERNICUS/S2_SR"),
+    geometry = 
+    /* color: #d63000 */
+    /* shown: false */
+    /* locked: true */
+    ee.Geometry.Point([-57.644652406334494, -16.108582174309213]),
+    Agua = 
+    /* color: #98ff00 */
+    /* shown: false */
+    /* locked: true */
+    ee.FeatureCollection(
+        [ee.Feature(
+            ee.Geometry.Point([-57.89240312916353, -15.991373545311513]),
+            {
+              "class": 0,
+              "system:index": "0"
+            }),
+        ee.Feature(
+            ee.Geometry.Point([-57.891373160901814, -15.992239891233554]),
+            {
+              "class": 0,
+              "system:index": "1"
+            }),
+        ee.Feature(
+            ee.Geometry.Point([-57.890600684705525, -15.993023724785148]),
+            {
+              "class": 0,
+              "system:index": "2"
+            }),
+        ee.Feature(
+            ee.Geometry.Point([-57.89030027729586, -15.994467620650529]),
+            {
+              "class": 0,
+              "system:index": "3"
+            }),
+        ee.Feature(
+            ee.Geometry.Point([-57.89017153126314, -15.996282789226226]),
+            {
+              "class": 0,
+              "system:index": "4"
+            }),
+        ee.Feature(
+            ee.Geometry.Point([-57.88991403919771, -15.99694284643929]),
+            {
+              "class": 0,
+              "system:index": "5"
+            }),
+        ee.Feature(
+            ee.Geometry.Point([-57.89064360004976, -16.001893206045608]),
+            {
+              "class": 0,
+              "system:index": "6"
+            }),
+        ee.Feature(
+            ee.Geometry.Point([-57.889871123853474, -16.00181070105718]),
+            {
+              "class": 0,
+              "system:index": "7"
+            }),
+        ee.Feature(
+            ee.Geometry.Point([-57.88566542011812, -16.00704970020598]),
+            {
+              "class": 0,
+              "system:index": "8"
+            }),
+        ee.Feature(
+            ee.Geometry.Point([-57.88579416615084, -16.007214705821085]),
+            {
+              "class": 0,
+              "system:index": "9"
+            }),
+        ee.Feature(
+            ee.Geometry.Point([-57.886631015363484, -16.00362580293195]),
+            {
+              "class": 0,
+              "system:index": "10"
+            }),
+        ee.Feature(
+            ee.Geometry.Point([-57.88740349155977, -16.0037495592774]),
+            {
+              "class": 0,
+              "system:index": "11"
+            }),
+        ee.Feature(
+            ee.Geometry.Point([-57.88819742542818, -16.003687681114254]),
+            {
+              "class": 0,
+              "system:index": "12"
+            })]),
+    Mata = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    /* locked: true */
+    ee.Feature(
+        ee.Geometry.MultiPoint(
+            [[-57.85648298603609, -15.990785665583505],
+             [-57.85699797016695, -15.991445740948416],
+             [-57.85759878498629, -15.992435849909587],
+             [-57.858371261182576, -15.993425953967076],
+             [-57.85699797016695, -15.99317842841244],
+             [-57.85596800190523, -15.992765885140278],
+             [-57.85502386433199, -15.992353341016774],
+             [-57.853908065381795, -15.9929309025513],
+             [-57.85553884846285, -15.994416053120634],
+             [-57.837428573194295, -15.996973786567661],
+             [-57.83845854145601, -15.997881361535638],
+             [-57.839660171094685, -15.999118957122256],
+             [-57.840175155225545, -16.00043905063296],
+             [-57.83974600178316, -16.002089155256577],
+             [-57.83785772663668, -16.00093408345096],
+             [-57.85227728230074, -15.986907678807537],
+             [-57.85373640400484, -15.986825167633514],
+             [-57.85399389607027, -15.98583503089001],
+             [-57.84781408649996, -15.9827820784075],
+             [-57.850131515088826, -15.98443232877908],
+             [-57.85176229816988, -15.98814534233261],
+             [-57.85347891193941, -15.988227852961915],
+             [-57.84283590656832, -15.986660145183349]]),
+        {
+          "class": 1,
+          "system:index": "0"
+        }),
+    soloexposto = 
+    /* color: #ffc82d */
+    /* shown: false */
+    /* locked: true */
+    ee.Feature(
+        ee.Geometry.MultiPoint(
+            [[-57.91416120869234, -15.992537541386643],
+             [-57.91398954731539, -15.993115102389002],
+             [-57.91403246265963, -15.993651407539897],
+             [-57.91428995472506, -15.99422896532407],
+             [-57.91424703938082, -15.994724013525131],
+             [-57.91398954731539, -15.995095298871322],
+             [-57.91368913990572, -15.99554909113562],
+             [-57.91368913990572, -15.995920374949163],
+             [-57.91343164784029, -15.996044136067082],
+             [-57.91137171131685, -15.996992968758395],
+             [-57.912101272168904, -15.996497926177105],
+             [-57.879099372449666, -15.998931873728045],
+             [-57.87875604969576, -15.99860184867873],
+             [-57.878627303663045, -15.997900543639261],
+             [-57.879099372449666, -15.997941796944994],
+             [-57.879142287793904, -15.993981440763749],
+             [-57.87931394917086, -15.994682759555209],
+             [-57.87897062641695, -15.995342822052297],
+             [-57.87832689625338, -16.00260336563828],
+             [-57.87819815022066, -16.00305714085259],
+             [-57.87197542530611, -16.000994517937055],
+             [-57.874593261304646, -16.001035770604044],
+             [-57.87506533009127, -16.00140704422372],
+             [-57.87549448353365, -15.986019237264653],
+             [-57.877125266614705, -15.986349283086506],
+             [-57.879399779859334, -15.985235376254899],
+             [-57.88051557880953, -15.986225515967131],
+             [-57.85734129292086, -16.0008295071839],
+             [-57.85785627705172, -16.000004451374004],
+             [-57.86678266865328, -15.988494567651797],
+             [-57.867168906751424, -15.98630802738855],
+             [-57.86734056812838, -15.985895469941038],
+             [-57.86742639881685, -15.985647935064044],
+             [-57.86755514484957, -15.98507035249297],
+             [-57.86759806019381, -15.984740304560642],
+             [-57.86742639881685, -15.981522308680526],
+             [-57.868713859144, -15.980944714196902]]),
+        {
+          "class": 2,
+          "system:index": "0"
+        }),
+    pasto = 
+    /* color: #00ffff */
+    /* shown: false */
+    /* locked: true */
+    ee.Feature(
+        ee.Geometry.MultiPoint(
+            [[-57.81923246723726, -15.917915025564296],
+             [-57.818459991040974, -15.917543597190152],
+             [-57.81936121326998, -15.91713089819129],
+             [-57.8198332820566, -15.916842008387665],
+             [-57.82030535084322, -15.916264227534274],
+             [-57.8163571391733, -15.916429307947643],
+             [-57.816915038648396, -15.916016606659914],
+             [-57.8172583614023, -15.91564517477617],
+             [-57.81803083759859, -15.914861038544595],
+             [-57.81811666828707, -15.918245183542595],
+             [-57.81515550953463, -15.917254707979955],
+             [-57.815970901075154, -15.917378517692336],
+             [-57.816185477796346, -15.917089628244769],
+             [-57.81730127674654, -15.918575340978302],
+             [-57.81811666828707, -15.918740419492677]]),
+        {
+          "class": 3,
+          "system:index": "0"
+        }),
+    lavoura = 
+    /* color: #bf04c2 */
+    /* shown: false */
+    /* locked: true */
+    ee.Feature(
+        ee.Geometry.MultiPoint(
+            [[-57.649016868916995, -16.151713846385718],
+             [-57.646527778951175, -16.152538272862454],
+             [-57.64747191652442, -16.15385734807882],
+             [-57.64867354616309, -16.15385734807882],
+             [-57.64961768373633, -16.154764207187664],
+             [-57.65013266786719, -16.155588620951367],
+             [-57.648244392720706, -16.155588620951367],
+             [-57.64910269960547, -16.157567199963733],
+             [-57.65056182130957, -16.157649640326344],
+             [-57.65107680544043, -16.1590511212324],
+             [-57.649531853047854, -16.159380880002082],
+             [-57.649016868916995, -16.159380880002082],
+             [-57.65142012819434, -16.161441859852943],
+             [-57.6519351123252, -16.16243112255039],
+             [-57.64918853029395, -16.163337942341155],
+             [-57.64472533449317, -16.163502818219822],
+             [-57.6438670276084, -16.163997445030798],
+             [-57.64833022340918, -16.16589350300707],
+             [-57.65039015993262, -16.165398880940618],
+             [-57.65142012819434, -16.16696517990474],
+             [-57.650046837178714, -16.167377361779618],
+             [-57.648759376851565, -16.167542234288867],
+             [-57.64944602235938, -16.169190951816297],
+             [-57.65090514406348, -16.16894364506406],
+             [-57.65167762025977, -16.16968556439223],
+             [-57.65039015993262, -16.170427480934798]]),
+        {
+          "class": 4,
+          "system:index": "0"
+        }),
+    urbana = 
+    /* color: #ff0000 */
+    /* shown: false */
+    ee.Feature(
+        ee.Geometry.MultiPoint(
+            [[-57.68359988974523, -16.07976942690567],
+             [-57.68711894797277, -16.076717912273196],
+             [-57.689522207250114, -16.074078726710905],
+             [-57.68986553000402, -16.075728221792694],
+             [-57.690466344823356, -16.076965334123532],
+             [-57.691238821019645, -16.078367385458915],
+             [-57.69192546652746, -16.079934372308085],
+             [-57.692268789281364, -16.081088986292265],
+             [-57.693212926854606, -16.08265595168502],
+             [-57.69604533957433, -16.082738423205566],
+             [-57.68488735007238, -16.070532265951275],
+             [-57.68282741354894, -16.07094464835879],
+             [-57.68205493735265, -16.06830538617609],
+             [-57.686003149022575, -16.06739813171281],
+             [-57.68763393210363, -16.067150697959235],
+             [-57.68033832358312, -16.08414043381817],
+             [-57.679480016698356, -16.082573480130264],
+             [-57.678278387059684, -16.082738423205566],
+             [-57.67630428122472, -16.082820894691874],
+             [-57.675531805028434, -16.08504761188473],
+             [-57.6749309902091, -16.08504761188473],
+             [-57.67244190024328, -16.08504761188473],
+             [-57.672785222997184, -16.084305375592866],
+             [-57.65012592123937, -16.086284666209817],
+             [-57.65012592123937, -16.085789845404012],
+             [-57.65012592123937, -16.085212552906395],
+             [-57.67810672568273, -16.068140431126903],
+             [-57.68033832358312, -16.06393403115847],
+             [-57.680252492894645, -16.063274195643245],
+             [-57.681024969090934, -16.063191716049996]]),
+        {
+          "system:index": "0",
+          "class": 6
+        }),
+    cicatriz = 
+    /* color: #00ff00 */
+    /* shown: false */
+    /* locked: true */
+    ee.Feature(
+        ee.Geometry.MultiPoint(
+            [[-57.72608608054113, -16.097830135092405],
+             [-57.729175985326286, -16.096593152674465],
+             [-57.73175090598058, -16.095933425567086],
+             [-57.73381084250402, -16.09576849344774],
+             [-57.73707240866613, -16.095356162549994],
+             [-57.73956149863195, -16.09486136434249],
+             [-57.73775905417394, -16.097335343050048],
+             [-57.73449748801183, -16.079439535690227],
+             [-57.736471593846794, -16.079686954153146],
+             [-57.738445699681755, -16.078944697840505],
+             [-57.741707265843864, -16.07820243875623],
+             [-57.740419805516716, -16.077625124218983],
+             [-57.74024814413976, -16.073418924846777],
+             [-57.74428218649816, -16.08513008241267],
+             [-57.746685445775505, -16.08644960620456],
+             [-57.7463421230216, -16.088181467882162],
+             [-57.74805873679113, -16.08620219616109],
+             [-57.7368149166007, -16.105251867733077],
+             [-57.738188207616325, -16.10681864247682],
+             [-57.736214101781364, -16.10780817804595],
+             [-57.73638576315832, -16.10970477409184],
+             [-57.556141317357536, -16.098696018199288],
+             [-57.556141317357536, -16.10463340061303],
+             [-57.55923122214269, -16.109251241904254],
+             [-57.562664449681755, -16.11947607935403],
+             [-57.567127645482536, -16.135966641382304],
+             [-57.569874227513786, -16.138605003921107],
+             [-57.54103511618566, -16.13629643862201],
+             [-57.54549831198644, -16.144541191090248],
+             [-57.55202144431066, -16.151466517772747],
+             [-57.5540813808341, -16.15443444072005],
+             [-57.557171285619255, -16.165316443809207],
+             [-57.55648464011144, -16.17092209041558],
+             [-57.55545467184972, -16.1745491887742]]),
+        {
+          "system:index": "0",
+          "class": 5
+        }),
+    crit1 = 
+    /* color: #0000ff */
+    /* shown: false */
+    /* locked: true */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[-57.56495300719827, -16.06804663858027],
+          [-57.56495300719827, -16.11950599543099],
+          [-57.51826111266702, -16.11950599543099],
+          [-57.51826111266702, -16.06804663858027]]], null, false),
+    crit2 = 
+    /* color: #999900 */
+    /* shown: false */
+    /* locked: true */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[-57.59241882751077, -16.04561146751927],
+          [-57.59241882751077, -16.153804817031435],
+          [-57.494915165401395, -16.153804817031435],
+          [-57.494915165401395, -16.04561146751927]]], null, false),
+    crit3 = 
+    /* color: #009999 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[-57.637737431026395, -15.998093356062206],
+          [-57.637737431026395, -16.203923164783138],
+          [-57.44410339782327, -16.203923164783138],
+          [-57.44410339782327, -15.998093356062206]]], null, false);
+
+// Code
+
+//Load city shape file
+
+var munic_BR = ee.FeatureCollection("users/asbarreto00/br_municipios");
+var caceres = munic_BR.filter(ee.Filter.eq('CD_MUN', '5102504'));
+
+
+//Load Sentinel 2 Images
+var filtro = imageCollection.filterBounds(geometry).filterDate('2020-09-15','2020-09-30').filterMetadata('CLOUD_COVERAGE_ASSESSMENT','less_than',20);
+
+var img7 = filtro.first();
+
+//Parameters to Sentinel Visualization
+ var visParams = {
+      bands: ['B4', 'B3', 'B2'],
+      min: -200,
+      max: 5000,
+      gamma: [1.66, 1.66, 1.66]
+     };
+     
+ var fireParams = {
+      bands: ['B8A', 'B11', 'B12'],
+      min: -200,
+      max: 5000,
+      gamma: [1.66, 1.66, 1.66]
+     };  
+
+//Add Layers
+Map.addLayer(img7,visParams,"Visível");
+Map.addLayer(img7,fireParams,"Camada de Fogo");
+
+
+
+//Create the samples to classify
+var amostra = Agua.merge(Mata).merge(soloexposto).merge(pasto).merge(lavoura).merge(cicatriz);
+
+
+//Define bands used on classification process (RGB+NIR)
+var bandas = ['B2','B3','B4','B8'];
+
+//Define the training samples for the machine learning algorithm
+var treinamento = img7.select(bandas).sampleRegions ({
+  collection:amostra,
+  properties: ['class'],
+  scale: 10
+});
+
+
+//Define the method to classify
+var classificacao = ee.Classifier.minimumDistance().train({
+  features: treinamento,
+  classProperty: 'class',
+  inputProperties: bandas
+});
+
+//Apply the Land Cover classification
+var classificacao = img7.select(bandas).classify(classificacao);
+//////
+
+//Normalize the results
+var normalizacao = classificacao.reduceNeighborhood({
+  reducer: ee.Reducer.mode(),
+  kernel: ee.Kernel.gaussian(20),
+});
+
+
+//Add the Classification Layer
+Map.addLayer(normalizacao, {min:0, max:7, palette:['#0221ff','#035601','#87856c','#14fff4', '#ff4747','#0a0303']}, 'classification');
+
+
+
+
+// Load GOES-16 Image Collection, filter date and select first image.
+var collection = ee.ImageCollection('NOAA/GOES/16/FDCF')
+                      .filterDate('2020-09-10','2020-09-30');
+var image = collection.first();
+
+Map.setOptions("HYBRID");
+
+// Select property of image.
+var DQF = image.select('DQF');
+
+
+
+// Create color palette to correspond with Data Quality Flag categories.
+var DQFVisParam = {
+  min: 0,
+  max: 5,
+  palette: [
+    'FFFF00',    // 0:  Good quality fire pixel
+    '8BC34A',    // 1:  Good quality fire-free pixel
+    'B3E5FC',    // 2:  Invalid pixel due to opaque cloud
+    '2196F3',    // 3:  Invalid pixel due to to surface type, sunglint,
+                 //     LZA threshold exceeded, off earth, or missing input data
+    'B2EBF2',    // 4:  Invalid pixel due to bad input data
+    'C5CAE9',    // 5:  Invalid pixel due to algorithm failure
+  ]
+ };
+
+// Filter image to show only good quality fire-pixels (DQF = 0).
+var onlyFire = DQF.eq(0);
+
+// Buffer fires to make them stand out.
+var fireBuffer = onlyFire.reduceToVectors({
+  scale: 2000,
+  geometry:caceres,
+  geometryType: 'centroid',
+  labelProperty: 'buffer',
+  maxPixels: 1e10,})
+  .map(function(feature){
+  return feature.buffer(3000);});
+  
+  // Buffer fires to make them stand out.
+var orangeBuffer = onlyFire.reduceToVectors({
+  scale: 2000,
+  geometry:caceres,
+  geometryType: 'centroid',
+  labelProperty: 'buffer',
+  maxPixels: 1e10,})
+  .map(function(feature){
+  return feature.buffer(6000);}
+  );
+  
+
+// Buffer fires to make them stand out.
+var yellowBuffer = onlyFire.reduceToVectors({
+  scale: 2000,
+  geometry:caceres,
+  geometryType: 'centroid',
+  labelProperty: 'buffer',
+  maxPixels: 1e10,})
+  .map(function(feature){
+  return feature.buffer(12000);});
+
+// Add Layers to Map.
+Map.addLayer(DQF, DQFVisParam, 'Fire Data Quality Flags', true, 0.7);
+Map.addLayer(fireBuffer, {color: 'red'}, 'Crítico - 1', true);
+Map.addLayer(orangeBuffer, {color: 'orange'}, 'Crítico - 2', true);
+Map.addLayer(yellowBuffer, {color: 'yellow'}, 'Crítico - 3', true);
+Map.addLayer(caceres)
+
+
+//Calculate the classes under critical dangerous
+// Implement the prediction model in the future to evaluate the most probable fire path and define the cricital regions without buffer.
+for (var i=0; i < 6 ;i++){
+  var imageFilt = ee.Image(1).mask(normalizacao.select('classification_mode').eq(i));
+
+print ('Classe:', ee.Number(i))
+
+var area_pxa = imageFilt.multiply(ee.Image.pixelArea()) 
+                    .reduceRegion(ee.Reducer.sum(),fireBuffer,10,null,null,false,1e13)                  
+                    .get('constant')
+                    print ('Área em ha Crítica - Nível 1:', ee.Number(area_pxa).divide(1e4))
+var area_pxa2 = imageFilt.multiply(ee.Image.pixelArea()) 
+                    .reduceRegion(ee.Reducer.sum(),orangeBuffer,10,null,null,false,1e13)                  
+                    .get('constant')
+                    print ('Área Crítica em ha - Nível 2:', ee.Number(area_pxa2).divide(1e4))
+var area_pxa3 = imageFilt.multiply(ee.Image.pixelArea()) 
+                    .reduceRegion(ee.Reducer.sum(),yellowBuffer,10,null,null,false,1e13)                  
+                    .get('constant')
+                    print ('Área Crítica em ha - Nível 3:', ee.Number(area_pxa3).divide(1e4))
+
+ }
+
+
+
